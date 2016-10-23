@@ -44,11 +44,11 @@ curl -v "http://ec2-54-201-57-60.us-west-2.compute.amazonaws.com:8000/parking/?l
 
 ###To make a reservation
 ```
-curl -v -H "Authorization: Token {{ valid_access_token }}" -H "Content-Type:application/json" -X POST -d '{"parking_location_id":"1"}' http://ec2-54-201-57-60.us-west-2.compute.amazonaws.com:8000/reservations/
+curl -v -H "Authorization: Token {{ valid_access_token }}" -H "Content-Type:application/json" -X POST -d '{"parking_location":1}' http://ec2-54-201-57-60.us-west-2.compute.amazonaws.com:8000/reservations/
 ```
 ###To get/patch/put/delete a reservation
 ```
 curl -v -H "Authorization: Token {{ valid_access_token }}" http://ec2-54-201-57-60.us-west-2.compute.amazonaws.com:8000/reservations/2/
-curl -v -H "Authorization: Token {{ valid_access_token }}" -H "Content-Type:application/json" -X PATCH -d '{"parking_location_id": 2}' http://ec2-54-201-57-60.us-west-2.compute.amazonaws.com:8000/reservations/2/
+curl -v -H "Authorization: Token {{ valid_access_token }}" -H "Content-Type:application/json" -X PATCH -d '{"parking_location":2}' http://ec2-54-201-57-60.us-west-2.compute.amazonaws.com:8000/reservations/2/
 curl -v -H "Authorization: Token {{ valid_access_token }}" -X DELETE http://ec2-54-201-57-60.us-west-2.compute.amazonaws.com:8000/reservations/2/
 ```

@@ -1,4 +1,7 @@
 from django.db import models
+from django.db.models.signals import pre_save, pre_delete
+
+from ridecell.parking.models import ParkingLocation
 
 
 class Reservation(models.Model):
