@@ -27,6 +27,8 @@ curl -v -H "Authorization: Token {{ valid_access_token }}" -H "Content-Type:appl
 curl -v -H "Authorization: Token {{ valid_access_token }}" -H "Content-Type:application/json" -X PATCH -d '{"token": {{ valid_stripe_token}} }'  "http://ec2-54-201-57-60.us-west-2.compute.amazonaws.com:8000/users/1/"
 ```
 
+Note that stripe tokens can be obtained from the "Stripe Token" button at http://ridecell.garyguo.ca
+
 ###To get access token for existing User:
 ```
 curl -v -H "Content-Type:application/json" -X POST -d '{"username":"test@test.com","password":"123456"}' "http://ridecell.garyguo.ca/users/access_token/"
