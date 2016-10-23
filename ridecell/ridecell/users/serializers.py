@@ -16,9 +16,10 @@ class UserSerializer(serializers.ModelSerializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='user.username', read_only=True)
-    last4 = serializers.CharField(read_only=True)
-    expiration_date = serializers.DateField(read_only=True)
+    cc_last4 = serializers.CharField(read_only=True)
+    cc_brand = serializers.CharField(read_only=True)
+    cc_expiration_date = serializers.DateField(read_only=True)
 
     class Meta:
         model = UserProfile
-        fields = ('phone_number', 'username', 'last4', 'expiration_date')
+        fields = ('phone_number', 'username', 'cc_last4', 'cc_brand', 'cc_expiration_date')

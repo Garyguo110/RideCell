@@ -4,6 +4,9 @@ from django.db.models.signals import post_save
 
 
 class UserProfile(models.Model):
+    def __unicode__(self):
+        return unicode("%s" % self.user.username)
+
     user = models.OneToOneField(User)
     phone_number = models.CharField(max_length=15, blank=True)
     # Payment related information
