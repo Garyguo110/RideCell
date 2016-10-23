@@ -1,3 +1,5 @@
+from django.db import transaction
+
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import BasePermission, IsAuthenticated
@@ -31,10 +33,17 @@ class ReservationCreateView(CreateAPIView):
         if not parking_location_id:
             return Response("Invalid request, required field not set parking_location_id", status=status.HTTP_400_BAD_REQUEST)
         try:
-            reservation = Reservation.objects.create(
-                parking_location_id=parking_location_id,
-                user_id=request.request.user.id
-            )
-            return Response({'reservation_id': reservation.id}, status=status.HTTP_201_CREATED)
+            with transaction.atomic():
+                parking_location = ParkingLocation.objects.select_for_update().get(id=parking_location_id)
+                if parking_location.reserved >= parking_location.capacity:
+                    return Response('The selected parking location is at max capacity', status=status.HTTP_400_BAD_REQUEST)
+                else:
+                    parking_location.reserved += 1
+                    parking_location.save()
+                    reservation = Reservation.objects.create(
+                        parking_location_id=parking_location_id,
+                        user_id=request.request.user.id
+                    )
+                    return Response({'reservation_id': reservation.id}, status=status.HTTP_201_CREATED)
         except:
             return Response('An error has occured when attempting to create the reservation', status=status.HTTP_400_BAD_REQUEST)
