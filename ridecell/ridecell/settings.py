@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'ridecell.parking',
     'ridecell.reservations',
     'ridecell.users',
+    'ridecell.main',
 
     'rest_framework',
     'rest_framework.authtoken',
