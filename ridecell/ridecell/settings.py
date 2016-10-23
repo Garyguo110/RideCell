@@ -59,6 +59,8 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
+X_FRAME_OPTIONS = 'ALLOWALL'
+
 ROOT_URLCONF = 'ridecell.urls'
 
 TEMPLATES = [
