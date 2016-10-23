@@ -1,5 +1,8 @@
+import datetime
 import re
+import stripe
 from django.contrib.auth.models import User
+from django.conf import settings
 
 from rest_framework import status
 from rest_framework.authtoken.models import Token
@@ -33,7 +36,7 @@ class UserCreateView(CreateAPIView):
                 profile.save()
 
             token = Token.objects.create(user=user)
-            return Response({'access_token': token.key}, status=status.HTTP_201_CREATED)
+            return Response({'access_token': token.key, 'user_id': user.id}, status=status.HTTP_201_CREATED)
         else:
             return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -53,4 +56,18 @@ class UserProfileUpdateView(RetrieveUpdateAPIView):
 
     def perform_update(self, serializer):
         instance = serializer.save()
-        # send_email_confirmation(user=self.request.user, modified=instance)
+        stripe_token = self.request.data.get('token')
+        if stripe_token:
+            email = instance.user.username
+            stripe.api_key = settings.STRIPE_API_KEY
+            stripe_customer = stripe.Customer.create(
+                email=email,
+                description="Customer for %s" % email,
+                source=stripe_token,
+            )
+            instance.stripe_customer_id = stripe_customer.id
+            source = customer.sources.data[0]
+            instance.cc_last4 = source.last4
+            instance.cc_brand = source.brand
+            instance.cc_expiration_date = datetime.date(year=source.exp_year, month=source.exp_month, day=monthrange(source.exp_year, source.exp_month)[1])
+            instance.save()

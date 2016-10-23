@@ -62,15 +62,34 @@
               <a target="_blank" href="http://ridecell.garyguo.ca/users">Users Endpoint</a>: This endpoint enables creation, access_token retrieval and user profile retrieval.
             </li>
             <li>
-              <a target="_blank" href="http://ridecell.garyguo.ca/parking">Parking Endpoint</a>: This endpoint filtering of parking locations.
+              <a target="_blank" href="http://ridecell.garyguo.ca/parking">Parking Endpoint</a>: This endpoint filtering of parking locations. <a href="http://ridecell.garyguo.ca/parking/?longitude=-79.431089&amp;latitude=43.761539&amp;distance=100&amp;price=300">Here</a> is an example of filter arguments.
             </li>
             <li>
               <a target="_blank" href="http://ridecell.garyguo.ca/reservations">Reservations Endpoint</a>: This endpoint enables creation, retrieval, update and deletion reservations.
             </li>
           </ul>
         </div>
+        <div class="col-lg-6">
+          <h4>Repository &amp; Setup</h4>
+          <p>The GitHub repository and setup instructions can be accessed <a target="_blank" href="https://github.com/Garyguo110/ridecell">here</a>.</p>
+        </div>
+        <br>
+        <button class="btn btn-lg btn-default" onclick="getStripeToke()">Stripe Token</button>
       </div>
 
     </div>
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    <script type="text/javascript">
+      Stripe.setPublishableKey('pk_test_uTkhGcIu6a136oYXaUaXtAFP');
+
+      function getStripeToke(){
+        Stripe.card.createToken({
+          number: '4242424242424242',
+          cvc: '123',
+          exp_month: '11',
+          exp_year: '2017',
+        }, function(status, response){alert(response.id)});
+      }
+    </script>
   </body>
 </html>

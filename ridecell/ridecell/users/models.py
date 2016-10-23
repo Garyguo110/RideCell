@@ -8,9 +8,9 @@ class UserProfile(models.Model):
     phone_number = models.CharField(max_length=15, blank=True)
     # Payment related information
     stripe_customer_id = models.CharField(max_length=255, blank=True)
-    last4 = models.CharField(max_length=4, blank=True)
-    brand = models.CharField(max_length=99, blank=True)
-    expiration_date = models.DateField(null=True, blank=True)
+    cc_last4 = models.CharField(max_length=4, blank=True)
+    cc_brand = models.CharField(max_length=99, blank=True)
+    cc_expiration_date = models.DateField(null=True, blank=True)
 
 
 def create_user_profile(sender, instance, created, **kwargs):

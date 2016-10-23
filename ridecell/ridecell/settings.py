@@ -21,6 +21,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'f6t9@6k2&adb1qk!u37tye#y=c-rkz26#&8)z$bq-wt_0@-)(y'
+STRIPE_API_KEY = 'sk_test_jTOgc20AjiQztv9uxFodValV'
+STRIPE_PUBLISH_KEY = 'pk_test_uTkhGcIu6a136oYXaUaXtAFP'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -46,6 +48,7 @@ INSTALLED_APPS = (
 
     'rest_framework',
     'rest_framework.authtoken',
+    'stripe',
 )
 
 MIDDLEWARE_CLASSES = (
