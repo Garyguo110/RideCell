@@ -89,13 +89,11 @@ REST_FRAMEWORK = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'ridecell',
         'USER': 'root',
         'PASSWORD': 'password',
-        'HOST': '',
-        'PORT': ''
-        # 'HOST': '/tmp/mysql.sock',
+        'HOST': 'ridecell-db.cphxfkd2nog5.us-west-2.rds.amazonaws.com',
+        'PORT': '5432'
     }
 }
 
