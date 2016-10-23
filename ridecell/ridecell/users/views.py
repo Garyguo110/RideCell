@@ -59,24 +59,26 @@ class UserProfileUpdateView(RetrieveUpdateAPIView):
     def partial_update(request, *args, **kwargs):
         data = request.request.data
         serialized = UserSerializer(data=data)
-        instance = serialized.save()
-
-        stripe_token = data.get('token')
-        if stripe_token:
-            email = instance.user.username
-            stripe.api_key = settings.STRIPE_API_KEY
-            try:
-                stripe_customer = stripe.Customer.create(
-                    email=email,
-                    description="Customer for %s" % email,
-                    source=stripe_token,
-                )
-                instance.stripe_customer_id = stripe_customer.id
-                source = stripe_customer.sources.data[0]
-                instance.cc_last4 = source.last4
-                instance.cc_brand = source.brand
-                instance.cc_expiration_date = datetime.date(year=source.exp_year, month=source.exp_month, day=monthrange(source.exp_year, source.exp_month)[1])
-                instance.save()
-            except:
-                return Response("An error occured when attempting to save payment information ", status=status.HTTP_400_BAD_REQUEST)
-        return Response(serialized.data)
+        if serialized.is_valid():
+            instance = serialized.save()
+            stripe_token = data.get('token')
+            if stripe_token:
+                email = instance.user.username
+                stripe.api_key = settings.STRIPE_API_KEY
+                try:
+                    stripe_customer = stripe.Customer.create(
+                        email=email,
+                        description="Customer for %s" % email,
+                        source=stripe_token,
+                    )
+                    instance.stripe_customer_id = stripe_customer.id
+                    source = stripe_customer.sources.data[0]
+                    instance.cc_last4 = source.last4
+                    instance.cc_brand = source.brand
+                    instance.cc_expiration_date = datetime.date(year=source.exp_year, month=source.exp_month, day=monthrange(source.exp_year, source.exp_month)[1])
+                    instance.save()
+                except:
+                    return Response("An error occured when attempting to save payment information ", status=status.HTTP_400_BAD_REQUEST)
+            return Response(serialized.data)
+        else:
+            return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
