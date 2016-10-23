@@ -66,7 +66,7 @@ class UserProfileUpdateView(RetrieveUpdateAPIView):
                 source=stripe_token,
             )
             instance.stripe_customer_id = stripe_customer.id
-            source = customer.sources.data[0]
+            source = stripe_customer.sources.data[0]
             instance.cc_last4 = source.last4
             instance.cc_brand = source.brand
             instance.cc_expiration_date = datetime.date(year=source.exp_year, month=source.exp_month, day=monthrange(source.exp_year, source.exp_month)[1])
