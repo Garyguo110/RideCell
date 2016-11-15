@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^users/', include('ridecell.users.urls')),
     url(r'^parking/', include('ridecell.parking.urls')),
     url(r'^reservations/', include('ridecell.reservations.urls')),
+    url(r'^alerts/', include('ridecell.alerts.urls')),
 ]

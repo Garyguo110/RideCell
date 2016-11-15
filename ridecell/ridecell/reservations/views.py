@@ -1,5 +1,8 @@
+import datetime
+from dateutil import parser
+
 from rest_framework import status
-from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView
 from rest_framework.permissions import BasePermission, IsAuthenticated
 from rest_framework.response import Response
 
@@ -17,10 +20,9 @@ class ReservationPermissions(BasePermission):
 
 
 class ReservationUpdateView(RetrieveUpdateDestroyAPIView):
-    permission_classes = (IsAuthenticated,)
     queryset = Reservation.objects.all()
     serializer_class = ReservationSerializer
-    permission_classes = (ReservationPermissions,)
+    permission_classes = (ReservationPermissions, IsAuthenticated)
 
     def destroy(request, *args, **kwargs):
         reservation = Reservation.objects.get(id=kwargs.get('pk'))
@@ -53,3 +55,55 @@ class ReservationCreateView(CreateAPIView):
             user_id=request.request.user.id
         )
         return Response({'reservation_id': reservation.id}, status=status.HTTP_201_CREATED)
+
+
+class ReservationListView(ListAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = ReservationSerializer
+
+    def get_queryset(self):
+        query_params = self.request.query_params
+        try:
+            start_time = parser.parse(query_params.get('start_datetime'))
+        except:
+            start_time = None
+
+        try:
+            end_time = parser.parse(query_params.get('end_datetime'))
+        except:
+            end_time = None
+
+        user = self.request.user
+        reservations = Reservation.objects.filter(user=user)
+        if start_time:
+            reservations = reservations.filter(time_created__gte=start_time)
+        if end_time:
+            reservations = reservations.filter(time_end__lte=end_time)
+
+        return reservations
+
+
+class ReservationExtendView(UpdateAPIView):
+    queryset = Reservation.objects.all()
+    serializer_class = ReservationSerializer
+    permission_classes = (IsAuthenticated, ReservationPermissions)
+
+    def partial_update(request, *args, **kwargs):
+        reservation = Reservation.objects.get(id=kwargs.get('pk'))
+        try:
+            extension_in_minutes = int(request.request.data.get('extension_in_minutes'))
+        except:
+            extension_in_minutes = None
+
+        if extension_in_minutes:
+            reservation.time_end += datetime.timedelta(minutes=extension_in_minutes)
+            reservation.save(update_fields=['time_end'])
+            return Response(
+                {
+                    'id': reservation.id,
+                    'time_end': reservation.time_end
+                },
+                status=status.HTTP_200_OK
+            )
+        else:
+            return Response('Invalid input for this endpoint', status=status.HTTP_400_BAD_REQUEST)
