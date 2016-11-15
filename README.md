@@ -74,7 +74,7 @@ curl -v -H "Authorization: Token 67c6e15089d7fe51f5a5365e89f95e539137f49b" -H "C
 ###To Create Alerts
 ```
 curl -v -H "Authorization: Token 5c90863be399d30b55f68350d56a3e151e275e6b" -H "Content-Type:application/json" -X POST -d '{"time_start":"2016-11-15T12:30:00", "time_end": "2016-11-15T14:30:00", "latitude":43.761539, "longitude":-79.433088, "radius":50 }' ec2-54-201-57-60.us-west-2.compute.amazonaws.com:8000/alerts/
-curl -v -H "Authorization: Token 5c90863be399d30b55f68350d56a3e151e275e6b" -H "Content-Type:application/json" -X POST -d '{"time_start":"2016-11-15T12:30:00", "time_end": "2016-11-14T14:30:00", "latitude":43.761539, "longitude":-79.433088, "radius":50 }' ec2-54-201-57-60.us-west-2.compute.amazonaws.com:8000/alerts/
+curl -v -H "Authorization: Token 5c90863be399d30b55f68350d56a3e151e275e6b" -H "Content-Type:application/json" -X POST -d '{"time_start":"2016-11-14T12:30:00", "time_end": "2016-11-14T14:30:00", "latitude":43.761539, "longitude":-79.433088, "radius":50 }' ec2-54-201-57-60.us-west-2.compute.amazonaws.com:8000/alerts/
 curl -v -H "Authorization: Token 5c90863be399d30b55f68350d56a3e151e275e6b" -H "Content-Type:application/json" -X POST -d '{"time_start":"2016-11-15T14:30:00", "time_end": "2016-11-15T16:30:00", "latitude":43.761539, "longitude":-79.433088, "radius":100 }' ec2-54-201-57-60.us-west-2.compute.amazonaws.com:8000/alerts/
 ```
 
