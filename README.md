@@ -58,24 +58,24 @@ curl -v -H "Authorization: Token {{ valid_access_token }}" -X DELETE http://ec2-
 
 ###To View Reservation History
 ```
-curl -v -H "Authorization: Token 67c6e15089d7fe51f5a5365e89f95e539137f49b" -H "Content-Type:application/json" -X POST -d '{"parking_location":1}' local.ridecell.co:8000/reservations/
-curl -v -H "Authorization: Token 67c6e15089d7fe51f5a5365e89f95e539137f49b" -H "Content-Type:application/json" local.ridecell.co:8000/reservations/history/
-curl -v -H "Authorization: Token 67c6e15089d7fe51f5a5365e89f95e539137f49b" -H "Content-Type:application/json" "local.ridecell.co:8000/reservations/history/?limit=5&offset=5"
-curl -v -H "Authorization: Token 67c6e15089d7fe51f5a5365e89f95e539137f49b" -H "Content-Type:application/json" local.ridecell.co:8000/reservations/history/?start_datetime="2016-11-14T22:33:48.471607"
-curl -v -H "Authorization: Token 5c90863be399d30b55f68350d56a3e151e275e6b" -H "Content-Type:application/json" local.ridecell.co:8000/reservations/history/
+curl -v -H "Authorization: Token 67c6e15089d7fe51f5a5365e89f95e539137f49b" -H "Content-Type:application/json" -X POST -d '{"parking_location":1}' ec2-54-201-57-60.us-west-2.compute.amazonaws.com:8000/reservations/
+curl -v -H "Authorization: Token 67c6e15089d7fe51f5a5365e89f95e539137f49b" -H "Content-Type:application/json" ec2-54-201-57-60.us-west-2.compute.amazonaws.com:8000/reservations/history/
+curl -v -H "Authorization: Token 67c6e15089d7fe51f5a5365e89f95e539137f49b" -H "Content-Type:application/json" "ec2-54-201-57-60.us-west-2.compute.amazonaws.com:8000/reservations/history/?limit=5&offset=5"
+curl -v -H "Authorization: Token 67c6e15089d7fe51f5a5365e89f95e539137f49b" -H "Content-Type:application/json" ec2-54-201-57-60.us-west-2.compute.amazonaws.com:8000/reservations/history/?start_datetime="2016-11-14T22:33:48.471607"
+curl -v -H "Authorization: Token 5c90863be399d30b55f68350d56a3e151e275e6b" -H "Content-Type:application/json" ec2-54-201-57-60.us-west-2.compute.amazonaws.com:8000/reservations/history/
 ```
 
 ###To Extend A Reservation
 ```
-curl -v -H "Authorization: Token 67c6e15089d7fe51f5a5365e89f95e539137f49b" -H "Content-Type:application/json" local.ridecell.co:8000/reservations/16/
-curl -v -H "Authorization: Token 67c6e15089d7fe51f5a5365e89f95e539137f49b" -H "Content-Type:application/json"  -X PATCH -d '{"extension_in_minutes":60}' local.ridecell.co:8000/reservations/16/extend/
+curl -v -H "Authorization: Token 67c6e15089d7fe51f5a5365e89f95e539137f49b" -H "Content-Type:application/json" ec2-54-201-57-60.us-west-2.compute.amazonaws.com:8000/reservations/16/
+curl -v -H "Authorization: Token 67c6e15089d7fe51f5a5365e89f95e539137f49b" -H "Content-Type:application/json"  -X PATCH -d '{"extension_in_minutes":60}' ec2-54-201-57-60.us-west-2.compute.amazonaws.com:8000/reservations/16/extend/
 ```
 
 ###To Create Alerts
 ```
-curl -v -H "Authorization: Token 5c90863be399d30b55f68350d56a3e151e275e6b" -H "Content-Type:application/json" -X POST -d '{"time_start":"2016-11-15T12:30:00", "time_end": "2016-11-15T14:30:00", "latitude":43.761539, "longitude":-79.433088, "radius":50 }' local.ridecell.co:8000/alerts/
-curl -v -H "Authorization: Token 5c90863be399d30b55f68350d56a3e151e275e6b" -H "Content-Type:application/json" -X POST -d '{"time_start":"2016-11-15T12:30:00", "time_end": "2016-11-14T14:30:00", "latitude":43.761539, "longitude":-79.433088, "radius":50 }' local.ridecell.co:8000/alerts/
-curl -v -H "Authorization: Token 5c90863be399d30b55f68350d56a3e151e275e6b" -H "Content-Type:application/json" -X POST -d '{"time_start":"2016-11-15T14:30:00", "time_end": "2016-11-15T16:30:00", "latitude":43.761539, "longitude":-79.433088, "radius":100 }' local.ridecell.co:8000/alerts/
+curl -v -H "Authorization: Token 5c90863be399d30b55f68350d56a3e151e275e6b" -H "Content-Type:application/json" -X POST -d '{"time_start":"2016-11-15T12:30:00", "time_end": "2016-11-15T14:30:00", "latitude":43.761539, "longitude":-79.433088, "radius":50 }' ec2-54-201-57-60.us-west-2.compute.amazonaws.com:8000/alerts/
+curl -v -H "Authorization: Token 5c90863be399d30b55f68350d56a3e151e275e6b" -H "Content-Type:application/json" -X POST -d '{"time_start":"2016-11-15T12:30:00", "time_end": "2016-11-14T14:30:00", "latitude":43.761539, "longitude":-79.433088, "radius":50 }' ec2-54-201-57-60.us-west-2.compute.amazonaws.com:8000/alerts/
+curl -v -H "Authorization: Token 5c90863be399d30b55f68350d56a3e151e275e6b" -H "Content-Type:application/json" -X POST -d '{"time_start":"2016-11-15T14:30:00", "time_end": "2016-11-15T16:30:00", "latitude":43.761539, "longitude":-79.433088, "radius":100 }' ec2-54-201-57-60.us-west-2.compute.amazonaws.com:8000/alerts/
 ```
 
 Note that ridecell.alerts.tasks.process_alerts_periodic_task is the periodic task to simulate creation of alerts
