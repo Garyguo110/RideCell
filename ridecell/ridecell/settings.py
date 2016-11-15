@@ -50,7 +50,6 @@ INSTALLED_APPS = (
     'rest_framework',
     'rest_framework.authtoken',
     'stripe',
-    'python-dateutil',
 )
 
 MIDDLEWARE_CLASSES = (
